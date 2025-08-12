@@ -25,10 +25,11 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <style>
       /* Contact Section Styling */
+/* ===== Contact Section ===== */
 .contact-section {
   display: flex;
   justify-content: center;
-  padding: 50px 20px;
+  padding: clamp(30px, 5vw, 50px) 20px;
   background: linear-gradient(135deg, #0d1b2a, #1b263b);
 }
 
@@ -38,28 +39,30 @@
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   border-radius: 16px;
-  padding: 2rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
   color: #fff;
-  margin-top: 90px;
+  margin-top: clamp(40px, 10vw, 90px);
 }
 
 .contact-card h2 {
   color: #00e5ff;
   margin-bottom: 0.5rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
 }
 
 .contact-intro {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.8vw, 1rem);
   color: #ccc;
   margin-bottom: 2rem;
 }
 
+/* ===== Contact Grid ===== */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: clamp(1.5rem, 3vw, 2rem);
 }
 
 @media (max-width: 768px) {
@@ -68,6 +71,7 @@
   }
 }
 
+/* ===== Form Styles ===== */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -78,15 +82,18 @@ label {
   margin-bottom: 0.3rem;
   font-weight: bold;
   color: #00e5ff;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
 }
 
-input, textarea {
+input,
+textarea {
   padding: 0.8rem;
   border: none;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
   color: white;
   outline: none;
+  font-size: 1rem;
 }
 
 input::placeholder,
@@ -99,6 +106,7 @@ textarea {
   min-height: 120px;
 }
 
+/* ===== Send Button ===== */
 .send-btn {
   background: linear-gradient(90deg, #00e5ff, #00bcd4);
   border: none;
@@ -108,6 +116,7 @@ textarea {
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
+  font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .send-btn:hover {
@@ -115,23 +124,25 @@ textarea {
   box-shadow: 0 0 15px #00e5ff88;
 }
 
-/* Quick Contact Box */
+/* ===== Quick Contact Box ===== */
 .quick-contact {
   background: rgba(15, 15, 31, 0.7);
   backdrop-filter: blur(8px);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid rgba(0,229,255,0.1);
+  border: 1px solid rgba(0, 229, 255, 0.1);
 }
 
 .quick-contact h3 {
   color: #00e5ff;
   margin-bottom: 1rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 }
 
 .quick-contact p {
   margin-bottom: 0.8rem;
   color: #ddd;
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
 }
 
 .quick-contact i {
@@ -144,6 +155,7 @@ textarea {
   transform: scale(1.2);
 }
 
+/* ===== Social Links ===== */
 .social-links {
   margin-top: 1rem;
   display: flex;
@@ -163,6 +175,17 @@ textarea {
   background: #00e5ff;
   color: #000;
   box-shadow: 0 0 15px #00e5ff88;
+}
+
+/* ===== Large Screen Tweaks ===== */
+@media (min-width: 1600px) {
+  .contact-card {
+    max-width: 1400px;
+    padding: 3rem;
+  }
+  .contact-grid {
+    gap: 3rem;
+  }
 }
 
   </style>
@@ -267,7 +290,6 @@ textarea {
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="careers.html">Careers</a>
         <a href="services.html">Services</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -300,9 +322,9 @@ textarea {
       </div>
       <div class="footer-column">
         <h4>Contact</h4>
-        <p><i class="fas fa-globe"></i> <a href="http://boomertech.in" target="_blank">www.boomertechnologies.in</a></p>
+        <p><i class="fas fa-globe"></i> <a href="http://boomertechnologies.in" target="_blank">www.boomertechnologies.in</a></p>
         <p><i class="fas fa-envelope"></i> <a href="mailto:contact@boomertechnologies.in">contact@boomertechnologies.in</a></p>
-        <p><i class="fas fa-map-marker-alt"></i> 862, Prabhat Arcade, 3rd Floor, Bengaluru, 560095</p>
+        <p><i class="fas fa-map-marker-alt"></i> Bengaluru, Karnataka</p>
       </div>
     </div>
     <div class="footer-social">

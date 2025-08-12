@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BOOMER</title>
+    <title>BOOMER Technologies - IT Services & Solutions</title>
     <link rel="icon" type="image/png" href="/images/logo.png">
 
     <!-- Bootstrap CSS CDN Link -->
@@ -313,13 +313,117 @@
   }
 </script>
 
+
+<section class="pc-builder-section">
+  <!-- Left: Build Your PC Text -->
+  <div class="pc-builder-text" data-aos="fade-up-left">
+    <h2>Build Your PC</h2>
+    <p>Choose your components and visualize your custom gaming PC in real-time with our interactive 3D preview. Select from a variety of hardware, tweak your build, and see the changes instantly.</p>
+    <a href="pc-builder.html" class="pc-builder-btn">Build Your PC</a>
+  </div>
+
+  <!-- Right: 3D Model Viewer -->
+  <div class="pc-builder-3d" data-aos="fade-up-right">
+    <model-viewer
+      src="images/dream_computer_setup-v1.glb"
+      alt="3D Service Model"
+      camera-controls
+      auto-rotate
+      shadow-intensity="1"
+      ar
+    ></model-viewer>
+  </div>
+</section>
+
+<!-- Add model-viewer script -->
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+
+<!-- Achievements Section -->
+<section id="achievements" class="achievements-section section">
+  <div class="container" data-aos="fade-up">
+    <div class="heading text-center">
+      <h3>Our Achievements</h3>
+      <p class="section-subtitle">
+        A glimpse at our milestones and growing impact in the tech industry.
+      </p>
+    </div>
+
+    <div class="stats-wrapper">
+      <div class="stat">
+        <h2 class="counter" data-target="250">0</h2>
+        <span>Global Clients</span>
+      </div>
+      <div class="stat">
+        <h2 class="counter" data-target="99">0</h2>
+        <span>Client Satisfaction (%)</span>
+      </div>
+      <div class="stat">
+        <h2 class="counter" data-target="5000">0</h2>
+        <span>Support Tickets Resolved</span>
+      </div>
+      <div class="stat">
+        <h2 class="counter" data-target="111">0</h2>
+        <span>Projects Delivered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const counters = document.querySelectorAll(".counter");
+  const achievementsSection = document.querySelector("#achievements");
+
+  // Function to animate counters
+  function animateCounters() {
+    counters.forEach(counter => {
+      counter.innerText = '0'; // reset counter before counting again
+
+      const target = +counter.getAttribute("data-target");
+      const speed = 80;
+
+      const updateCount = () => {
+        const current = +counter.innerText;
+        const increment = target / speed;
+
+        if (current < target) {
+          counter.innerText = Math.ceil(current + increment);
+          setTimeout(updateCount, 20);
+        } else {
+          counter.innerText = target.toLocaleString();
+        }
+      };
+
+      updateCount();
+    });
+  }
+
+  // Intersection Observer to detect visibility
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+        }
+      });
+    },
+    { threshold: 0.6 } // Trigger when 60% of the section is visible
+  );
+
+  observer.observe(achievementsSection);
+</script>
+<!-- Expertise Showcase Section Ends -->
+
+
+
 <!-- ✅ Company Timeline Section -->
 <section class="about-section">
   <div class="about-container">
     <div class="intro-content">
-      <h1>About <span>BOOMER Technologies</span></h1>
+      <h1>Shaping <span>Tomorrow’s Technology</span> Today</h1>
       <p>
-        BOOMER Technologies is not just an IT provider — we are digital architects, building futuristic solutions that blend intelligence, automation, and security to redefine the technology landscape for visionary enterprises.
+        At BOOMER Technologies, we design, innovate, and secure the digital future. 
+        Our mission is to create cutting-edge solutions that empower industries, drive growth, and inspire change.
       </p>
     </div>
 
@@ -429,105 +533,6 @@
   });
 </script>
 
-
-
-<!-- Achievements Section -->
-<section id="achievements" class="achievements-section section">
-  <div class="container" data-aos="fade-up">
-    <div class="heading text-center">
-      <h3>Our Achievements</h3>
-      <p class="section-subtitle">
-        A glimpse at our milestones and growing impact in the tech industry.
-      </p>
-    </div>
-
-    <div class="stats-wrapper">
-      <div class="stat">
-        <h2 class="counter" data-target="3500">0</h2>
-        <span>Global Clients</span>
-      </div>
-      <div class="stat">
-        <h2 class="counter" data-target="99">0</h2>
-        <span>Client Satisfaction (%)</span>
-      </div>
-      <div class="stat">
-        <h2 class="counter" data-target="500000">0</h2>
-        <span>Support Tickets Resolved</span>
-      </div>
-      <div class="stat">
-        <h2 class="counter" data-target="300">0</h2>
-        <span>Projects Delivered</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-  const counters = document.querySelectorAll(".counter");
-  const achievementsSection = document.querySelector("#achievements");
-
-  // Function to animate counters
-  function animateCounters() {
-    counters.forEach(counter => {
-      counter.innerText = '0'; // reset counter before counting again
-
-      const target = +counter.getAttribute("data-target");
-      const speed = 80;
-
-      const updateCount = () => {
-        const current = +counter.innerText;
-        const increment = target / speed;
-
-        if (current < target) {
-          counter.innerText = Math.ceil(current + increment);
-          setTimeout(updateCount, 20);
-        } else {
-          counter.innerText = target.toLocaleString();
-        }
-      };
-
-      updateCount();
-    });
-  }
-
-  // Intersection Observer to detect visibility
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounters();
-        }
-      });
-    },
-    { threshold: 0.6 } // Trigger when 60% of the section is visible
-  );
-
-  observer.observe(achievementsSection);
-</script>
-<!-- Expertise Showcase Section Ends -->
-
-
-<section class="pc-builder-section">
-  <!-- Left: Build Your PC Text -->
-  <div class="pc-builder-text" data-aos="fade-up-left">
-    <h2>Build Your PC</h2>
-    <p>Choose your components and visualize your custom gaming PC in real-time with our interactive 3D preview. Select from a variety of hardware, tweak your build, and see the changes instantly.</p>
-  </div>
-
-  <!-- Right: 3D Model Viewer -->
-  <div class="pc-builder-3d" data-aos="fade-up-right">
-    <model-viewer
-      src="images/dream_computer_setup.glb"
-      alt="3D Service Model"
-      camera-controls
-      auto-rotate
-      shadow-intensity="1"
-    ></model-viewer>
-  </div>
-</section>
-
-
-
     <!-- Back to Top Button -->
     <button
       type="button"
@@ -550,7 +555,6 @@
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="careers.html">Careers</a>
         <a href="services.html">Services</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -589,9 +593,9 @@
 
       <div class="footer-column">
         <h4>Contact</h4>
-        <p><i class="fas fa-globe"></i> <a href="http://boomertech.in" target="_blank">www.boomertechnologies.in</a></p>
+        <p><i class="fas fa-globe"></i> <a href="http://boomertechnologies.in" target="_blank">www.boomertechnologies.in</a></p>
         <p><i class="fas fa-envelope"></i> <a href="mailto:contact@boomertechnologies.in">contact@boomertechnologies.in</a></p>
-        <p><i class="fas fa-map-marker-alt"></i> 862, Prabhat Arcade, 3rd Floor, Bengaluru, 560095</p>
+        <p><i class="fas fa-map-marker-alt"></i> Bengaluru, Karnataka</p>
       </div>
     </div>
 
