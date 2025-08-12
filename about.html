@@ -4,14 +4,57 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BOOMER Technologies</title>
+
+    <!-- Primary title (kept as original) -->
+    <title>BOOMER Technologies - IT Services & Solutions</title>
     <link rel="icon" type="image/png" href="/images/logo.png">
 
-    <!-- Bootstrap CSS CDN Link -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <!-- ======= SEO Meta (Added / Updated) ======= -->
+    <meta name="description" content="BOOMER Technologies — Leading IT services & solutions in Bengaluru. We provide managed IT services, cloud computing, cybersecurity, network management, web & software development, e-commerce development, database management and IT consulting. Contact us for IT support, cloud migration and secure infrastructure." />
+    <meta name="keywords" content="IT services, IT support, managed IT services, cloud computing, cybersecurity, network management, web development, software development, e-commerce development, database management, IT consulting, Bengaluru IT company, India IT services" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://boomertechnologies.in/" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <!-- Open Graph / Social preview -->
+    <meta property="og:title" content="BOOMER Technologies - IT Services & Solutions" />
+    <meta property="og:description" content="Managed IT services, cloud & cybersecurity, network setup, web & software development, e-commerce solutions. BOOMER Technologies — transforming ideas into reality." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://boomertechnologies.in/" />
+    <meta property="og:image" content="https://boomertechnologies.in/images/logo.png" />
+    <meta property="og:site_name" content="BOOMER Technologies" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BOOMER Technologies - IT Services & Solutions">
+    <meta name="twitter:description" content="Managed IT services, cloud & cybersecurity, network setup, web & software development, e-commerce solutions. BOOMER Technologies — transforming ideas into reality.">
+    <meta name="twitter:image" content="https://boomertechnologies.in/images/logo.png">
+
+    <!-- JSON-LD structured data (Organization + WebSite) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BOOMER Technologies",
+      "url": "https://boomertechnologies.in/",
+      "logo": "https://boomertechnologies.in/images/logo.png",
+      "sameAs": [
+        "https://www.facebook.com/",
+        "https://www.instagram.com/",
+        "https://twitter.com/",
+        "https://www.linkedin.com/"
+      ],
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "email": "contact@boomertechnologies.in",
+        "contactType": "customer support",
+        "areaServed": "IN"
+      }]
+    }
+    </script>
+
+    <!-- Bootstrap CSS CDN Link (single include) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom CSS File -->
     <link rel="stylesheet" href="css/style.css" />
@@ -19,33 +62,36 @@
     <!-- Google Font Link -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Bootstrap Icon CDN Link -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
 
     <!-- AOS Library for Animations -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    <!-- Add Font Awesome for icons -->
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- jQuery CDN Link -->
+    <!-- jQuery (kept as original) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Lottie (single include, used by multiple components) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 
     <!-- EmailJS Library -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
-    <!-- Lottie Library for Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
-  </head>
+    <!-- Model Viewer (single include) -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
+    <!-- GSAP (moved to head so inline usage later works reliably) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- AOS init can stay in bottom, but keep CSS link above -->
+
+  </head>
   <body style="background-size: cover; background-position: center; background-repeat: no-repeat;">
   <!-- Clean Modern Navbar -->
   <nav class="tech-navbar">
