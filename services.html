@@ -104,21 +104,88 @@
 </head>
 
 <body class="dark-mode">
-<!-- Navbar -->
+<!-- ✅ Modern Navbar with Toggle -->
 <nav class="tech-navbar">
   <div class="navbar-container">
-    <a href="index.html" class="navbar-logo">
-      <img src="images/company_logo.png" alt="Company Logo" />
+    <!-- Logo -->
+    <a href="index.html" class="navbar-logo" aria-label="Home">
+      <img src="images/company_logo.png" alt="Company Logo" loading="lazy" />
     </a>
-    <ul class="navbar-links">
-      <li><a class="nav-link icon-only" href="index.html"><i class="fas fa-home"></i></a></li>
-      <li><a class="nav-link icon-only" href="about.html"><i class="fas fa-user"></i></a></li>
-      <li><a class="nav-link icon-only active" href="services.html"><i class="fas fa-cogs"></i></a></li>
-      <li><a class="nav-link icon-only" href="contact.html"><i class="fas fa-phone"></i></a></li>
+
+    <!-- ✅ Toggle Button (Visible only on mobile) -->
+    <button class="menu-toggle" aria-label="Toggle Menu" aria-controls="primary-navigation" aria-expanded="false">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Menu Links -->
+    <ul class="navbar-links" id="primary-navigation">
+      <li class="nav-item">
+        <a class="nav-link icon-only" href="index.html" aria-label="Home"><i class="fas fa-home"></i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link icon-only" href="about.html" aria-label="About"><i class="fas fa-user"></i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link icon-only" href="services.html" aria-label="Services"><i class="fas fa-cogs"></i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link icon-only" href="contact.html" aria-label="Contact"><i class="fas fa-phone"></i></a>
+      </li>
+      <!-- ✅ Mobile-only CTA inside menu (duplicate) -->
+      <li class="nav-item mobile-cta">
+        <a href="contact.html" class="cta-button">Let's Connect</a>
+      </li>
     </ul>
+
+    <!-- CTA Button -->
     <a href="contact.html" class="cta-button">Let's Connect</a>
   </div>
 </nav>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navbarLinks = document.querySelector(".navbar-links");
+  const links = document.querySelectorAll(".navbar-links a");
+  const mql = window.matchMedia("(max-width: 768px)");
+
+  function setMenu(open) {
+    if (!navbarLinks) return;
+    navbarLinks.classList.toggle("active", open);
+    if (menuToggle) menuToggle.setAttribute("aria-expanded", String(open));
+    document.body.classList.toggle("no-scroll", open);
+  }
+
+  if (menuToggle && navbarLinks) {
+    menuToggle.addEventListener("click", function(e) {
+      e.stopPropagation();
+      const open = !navbarLinks.classList.contains("active");
+      setMenu(open);
+    });
+
+    // Close on link click (mobile)
+    links.forEach(a => a.addEventListener("click", () => setMenu(false)));
+
+    // Close when clicking outside (mobile only)
+    document.addEventListener("click", (e) => {
+      if (!mql.matches) return;
+      if (!navbarLinks.classList.contains("active")) return;
+      const inside = e.target.closest(".tech-navbar");
+      if (!inside) setMenu(false);
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setMenu(false);
+    });
+
+    // Reset on resize to desktop
+    mql.addEventListener("change", (e) => {
+      if (!e.matches) setMenu(false);
+    });
+  }
+});
+</script>
 
 <!-- Page Title -->
 <header class="page-header">
@@ -191,13 +258,16 @@
 <button id="btn-back-to-top"><i class="bi bi-arrow-up"></i></button>
 
 <!-- Footer -->
+<!-- Real-World Inspired Modern Footer Start -->
 <footer class="footer-realworld">
   <div class="footer-container">
+    <!-- Top Row: Logo + Navigation -->
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="images/company_logo.png" alt="BOOMER Technologies Logo" class="footer-logo" />
+        <img src="images/company_logo.png" alt="BOOMER Technologies Logo" class="footer-logo" loading="lazy" />
         <h3>BOOMER Technologies</h3>
       </div>
+
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -205,17 +275,20 @@
         <a href="contact.html">Contact</a>
       </div>
     </div>
+
+    <!-- Middle Row: Four Columns -->
     <div class="footer-middle">
       <div class="footer-column">
-      <h4>Solutions</h4>
-      <ul>
-        <li><a href="services.html">Database Design & Management</a></li>
-        <li><a href="services.html">IT Support & Managed Services</a></li>
-        <li><a href="services.html">Network Setup & Management</a></li>
-        <li><a href="services.html">Web & Software Development</a></li>
-        <li><a href="services.html">E-commerce Development</a></li>
-      </ul>
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="services.html">Database Design & Management</a></li>
+          <li><a href="services.html">IT Support & Managed Services</a></li>
+          <li><a href="services.html">Network Setup & Management</a></li>
+          <li><a href="services.html">Web & Software Development</a></li>
+          <li><a href="services.html">E-commerce Development</a></li>
+        </ul>
       </div>
+
       <div class="footer-column">
         <h4>Company</h4>
         <ul>
@@ -224,6 +297,7 @@
           <li><a href="about.html">About Us</a></li>
         </ul>
       </div>
+
       <div class="footer-column">
         <h4>Legal</h4>
         <ul>
@@ -231,25 +305,155 @@
           <li><a href="terms.html">Terms & Conditions</a></li>
         </ul>
       </div>
+
       <div class="footer-column">
         <h4>Contact</h4>
-        <p><i class="fas fa-globe"></i> <a href="http://boomertechnologies.in" target="_blank">www.boomertechnologies.in</a></p>
-        <p><i class="fas fa-envelope"></i> <a href="mailto:contact@boomertechnologies.in">contact@boomertechnologies.in</a></p>
-        <p><i class="fas fa-map-marker-alt"></i> Bengaluru, Karnataka</p>
+        <p><i class="fas fa-globe" aria-hidden="true"></i> <a href="http://boomertechnologies.in" target="_blank" rel="noopener noreferrer">www.boomertechnologies.in</a></p>
+        <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:contact@boomertechnologies.in">contact@boomertechnologies.in</a></p>
+        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Bengaluru, Karnataka</p>
       </div>
     </div>
+
+    <!-- Social Icons -->
     <div class="footer-social">
-      <button onclick="window.open('https://www.instagram.com/', '_blank')"><i class="bi bi-instagram"></i></button>
-      <button onclick="window.location.href='mailto:contact@boomertechnologies.in'"><i class="bi bi-envelope"></i></button>
-      <button onclick="window.open('https://twitter.com/', '_blank')"><i class="bi bi-twitter"></i></button>
-      <button onclick="window.open('https://www.linkedin.com/', '_blank')"><i class="bi bi-linkedin"></i></button>
+      <button onclick="openInstagram()" title="Instagram" aria-label="Open Instagram"><i class="bi bi-instagram" aria-hidden="true"></i></button>
+      <button onclick="openEmail()" title="Email" aria-label="Send Email"><i class="bi bi-envelope" aria-hidden="true"></i></button>
+      <button onclick="openTwitter()" title="Twitter" aria-label="Open Twitter"><i class="bi bi-twitter" aria-hidden="true"></i></button>
+      <button onclick="openLinkedIn()" title="LinkedIn" aria-label="Open LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></button>
     </div>
+
+    <!-- Copyright -->
     <div class="footer-bottom">
       <hr />
       <p>&copy; 2025 BOOMER Technologies. All rights reserved.</p>
     </div>
   </div>
+
+  <!-- Social Functions + Mobile behavior script -->
+  <script>
+    // Original social functions (preserved)
+    function openInstagram() {
+      window.open("https://www.instagram.com/", "_blank", "noopener");
+    }
+    function openEmail() {
+      window.location.href = "mailto:contact@boomertechnologies.in";
+    }
+    function openTwitter() {
+      window.open("https://twitter.com/", "_blank", "noopener");
+    }
+    function openLinkedIn() {
+      window.open("https://www.linkedin.com/", "_blank", "noopener");
+    }
+
+    // Robust mobile toggles: create on mobile and completely remove on desktop (clean DOM restore)
+    (function () {
+      document.addEventListener('DOMContentLoaded', function () {
+        const footer = document.querySelector('.footer-realworld');
+        if (!footer) return;
+
+        const BREAKPOINT = 600; // px
+
+        // Create mobile toggles and wrap content
+        function createMobileToggles() {
+          const columns = footer.querySelectorAll('.footer-column');
+          columns.forEach((col) => {
+            // Skip if already created
+            if (col.dataset.hasToggle === 'true') return;
+
+            const heading = col.querySelector('h4');
+            if (!heading) return;
+
+            // Create toggle button
+            const toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'col-toggle';
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            toggleBtn.setAttribute('aria-label', 'Toggle ' + (heading.textContent || 'section').trim());
+            toggleBtn.innerHTML = '<span class="chev">+</span>';
+
+            // Append toggle to heading
+            heading.appendChild(toggleBtn);
+
+            // Wrap remaining column nodes into .col-content
+            const wrapper = document.createElement('div');
+            wrapper.className = 'col-content';
+
+            // Move all nodes after heading into wrapper
+            let node = heading.nextSibling;
+            const nodesToMove = [];
+            while (node) {
+              nodesToMove.push(node);
+              node = node.nextSibling;
+            }
+            nodesToMove.forEach(n => wrapper.appendChild(n));
+
+            col.appendChild(wrapper);
+
+            // Toggle behavior
+            toggleBtn.addEventListener('click', function () {
+              const open = wrapper.classList.toggle('open');
+              toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+              const chev = toggleBtn.querySelector('.chev');
+              if (chev) chev.textContent = open ? '−' : '+';
+            });
+
+            // mark as created
+            col.dataset.hasToggle = 'true';
+          });
+        }
+
+        // Remove mobile toggles and restore original DOM
+        function removeMobileToggles() {
+          const columns = footer.querySelectorAll('.footer-column');
+          columns.forEach((col) => {
+            if (col.dataset.hasToggle !== 'true') return;
+
+            const wrapper = col.querySelector('.col-content');
+            const toggle = col.querySelector('.col-toggle');
+            // If wrapper exists move children back into column (before wrapper)
+            if (wrapper) {
+              while (wrapper.firstChild) {
+                col.insertBefore(wrapper.firstChild, wrapper);
+              }
+              wrapper.remove();
+            }
+            if (toggle) toggle.remove();
+
+            delete col.dataset.hasToggle;
+          });
+        }
+
+        // Apply proper mode depending on width
+        function applyMode() {
+          if (window.innerWidth <= BREAKPOINT) {
+            footer.classList.add('mobile-unique');
+            createMobileToggles();
+            // hide footer-links on mobile theme (preserve desktop structure)
+            const fl = footer.querySelector('.footer-links');
+            if (fl) fl.style.display = 'none';
+          } else {
+            footer.classList.remove('mobile-unique');
+            removeMobileToggles();
+            // ensure footer-links visible on desktop
+            const fl = footer.querySelector('.footer-links');
+            if (fl) fl.style.display = '';
+          }
+        }
+
+        // Initial apply
+        applyMode();
+
+        // Debounced resize handler to avoid thrash
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(applyMode, 150);
+        });
+      });
+    })();
+  </script>
 </footer>
+
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
