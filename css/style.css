@@ -34,6 +34,7 @@ body, html {
   max-width: 1600px; /* ✅ Keeps navbar centered on big screens */
   left: 50%; /* 🔹 Ensures centering */
   transform: translateX(-50%); /* 🔹 Centers navbar */
+  overflow: visible; /* ✅ allow dropdown visibility */
 }
 
 /* ✅ Container */
@@ -45,6 +46,7 @@ body, html {
   justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
+  position: relative;
 }
 
 /* ✅ Logo */
@@ -66,6 +68,9 @@ body, html {
   padding: 0;
   flex-wrap: wrap;
 }
+
+/* ⛳ NEW: hide the mobile CTA by default (desktop/tablet) */
+.navbar-links .mobile-cta { display: none; }
 
 .nav-item {
   position: relative;
@@ -221,7 +226,108 @@ body, html {
   }
 }
 
+/* ========================= */
+/* 📱 FINAL MOBILE FIXES ✅  */
+/* (Overrides to ensure small logo/CTA and visible dropdown) */
+/* ========================= */
+@media (max-width: 768px) {
+  .tech-navbar {
+    height: auto;
+    padding: 0.7rem 0.9rem;
+    min-height: 60px;
+    z-index: 2000; /* keep above page */
+  }
 
+  .navbar-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  /* Smaller logo */
+  .navbar-logo img {
+    max-height: 36px;
+    max-width: 120px;
+    filter: drop-shadow(0 0 6px #ffffff);
+  }
+
+  /* Toggle position */
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 1;
+    z-index: 3;
+  }
+
+  /* Dropdown container (animated) */
+  .navbar-links {
+    display: flex !important; /* ensure visible for animation */
+    flex-direction: column;
+    gap: 0.8rem;
+    width: calc(100% - 20px);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.88);
+    padding: 0; /* collapsed */
+    border-radius: 12px;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 10px;
+    right: 10px;
+    z-index: 2001; /* above navbar */
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.2s ease;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  .navbar-links.active {
+    padding: 0.9rem;
+    max-height: 70vh;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Hide the header CTA; use the duplicate inside dropdown */
+  .navbar-container > .cta-button {
+    display: none;
+  }
+
+  /* ✅ Show the mobile CTA only on mobile */
+  .navbar-links .mobile-cta { display: block; }
+
+  /* Make the mobile CTA smaller */
+  .mobile-cta .cta-button {
+    width: 100%;
+    margin-top: 0;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  /* Shrink CTA generally on small screens (fallback) */
+  .cta-button {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+    margin-top: 0;
+  }
+}
+
+/* Accessibility & UX helpers */
+body.no-scroll { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-links, .nav-link::before, .cta-button, .tech-navbar {
+    transition: none !important;
+    animation: none !important;
+  }
+}
 
 /* Section Styling */
 #contents {
@@ -269,6 +375,9 @@ body, html {
   align-items: center;
   justify-content: center;
 }
+
+/* make reactor-right positioned parent so core-center absolute is relative to it */
+.reactor-right { position: relative; }
 
 /* ✅ Titles */
 .hero-title {
@@ -462,6 +571,102 @@ body, html {
   font-size: 1.2rem;
 }
 
+
+/* ============================== */
+/* MOBILE IMPROVEMENTS (overrides)
+   - keep desktop exactly as-is above
+   - below rules only change behavior for small screens to avoid overlap
+   - removes rotation & absolute positioning and stacks nodes neatly
+/* ============================== */
+
+@media (max-width: 768px) {
+
+  /* Reduce large top margins that push content off-screen on mobile */
+  .reactor-left,
+  .reactor-right {
+    margin-top: 10px;
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  /* Make Lottie area smaller and centered */
+  #lottie-animation {
+    width: 220px;
+    height: 220px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ensure fallback image will show if used */
+  .lottie-fallback { display: none; max-width:100%; height:auto; margin:0 auto; }
+
+  /* Disable orbit rotation to avoid overflow & jank on small screens */
+  .orbit-ring {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    border: none;
+    animation: none;
+    margin: 14px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background: transparent;
+    position: relative;
+  }
+
+  /* Make each orbit-item non-absolute so they stack */
+  .orbit-item {
+    position: static;
+    width: auto;
+    height: auto;
+    transform: none !important;
+  }
+
+  /* Place service nodes into a neat responsive grid */
+  .service-node {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: calc(50% - 14px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    margin: 6px 0;
+    text-align: left;
+  }
+
+  /* Slightly smaller typography on very small screens */
+  .service-node h3 { font-size: 0.95rem; }
+  .service-node p  { font-size: 0.78rem; }
+
+  /* Hover should not use translate which breaks static layout */
+  .service-node:hover {
+    transform: scale(1.03) !important;
+    box-shadow: 0 14px 30px rgba(255,0,255,0.08);
+  }
+
+  /* Hide the glowing core to reduce collisions */
+  .core-center { display: none; }
+
+  /* Move titles into normal flow so they don't overlap */
+  .hero-title, .hero-subtitle {
+    position: relative;
+    left: auto;
+    transform: none;
+    top: auto;
+    text-align: center;
+    margin: 12px 0 6px 0;
+  }
+
+  /* Very small phones: stack nodes as single column for readability */
+  @media (max-width: 420px) {
+    .service-node { width: 100%; }
+    #lottie-animation { width: 180px; height: 180px; }
+  }
+}
 
 /* Reset */
 /* ✅ Hero Section */
@@ -1297,6 +1502,7 @@ body, html {
   color: #ccc;
   font-family: 'Segoe UI', sans-serif;
   padding: 50px 20px 30px;
+  transition: background 0.35s ease, padding 0.3s ease;
 }
 
 .footer-container {
@@ -1320,8 +1526,8 @@ body, html {
 }
 
 .footer-logo {
-    height: 80px;
-    width: auto;
+  height: 80px;
+  width: auto;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
 }
 
@@ -1345,8 +1551,10 @@ body, html {
   transition: color 0.3s;
 }
 
-.footer-links a:hover {
+.footer-links a:hover,
+.footer-links a:focus {
   color: #00e0ff;
+  outline: none;
 }
 
 .footer-middle {
@@ -1361,6 +1569,7 @@ body, html {
   font-size: 1.2rem;
   margin-bottom: 15px;
   position: relative;
+  display: block;
 }
 
 .footer-column ul {
@@ -1380,8 +1589,10 @@ body, html {
   transition: color 0.3s;
 }
 
-.footer-column a:hover {
+.footer-column a:hover,
+.footer-column a:focus {
   color: #00e0ff;
+  outline: none;
 }
 
 .footer-column p {
@@ -1407,13 +1618,16 @@ body, html {
   border-radius: 50%;
   font-size: 1.2rem;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
-.footer-social button:hover {
+.footer-social button:hover,
+.footer-social button:focus {
   background-color: #00e0ff;
   color: #000;
   border-color: #00e0ff;
   transform: scale(1.1);
+  outline: none;
 }
 
 .footer-bottom {
@@ -1431,7 +1645,16 @@ body, html {
   color: #aaa;
 }
 
+/* Safety: hide any col-toggle on desktop by default */
+.col-toggle { display: none; }
+
 /* Responsive Design */
+@media (max-width: 992px) {
+  .footer-container {
+    padding: 0 16px;
+  }
+}
+
 @media (max-width: 768px) {
   .footer-top {
     flex-direction: column;
@@ -1442,7 +1665,166 @@ body, html {
   .footer-links {
     justify-content: center;
   }
+
+  .footer-logo {
+    height: 70px;
+  }
+
+  .footer-brand h3 {
+    font-size: 1.6rem;
+  }
 }
+
+/* ============================
+   UNIQUE MOBILE THEME (<=600px)
+   - glass/neon cards, accordion columns, larger touch targets
+   ============================ */
+@media (max-width: 600px) {
+  .footer-realworld {
+    /* mobile-unique default (will be enhanced by .mobile-unique class) */
+    padding: 24px 12px 18px;
+  }
+
+  /* mobile-only activated theme via JS: .mobile-unique */
+  .footer-realworld.mobile-unique {
+    background: linear-gradient(135deg, #020617 0%, #061026 60%, #071527 100%);
+    border-top: 4px solid rgba(0, 224, 255, 0.06);
+    padding: 20px 12px 14px;
+  }
+
+  /* Show toggle (only when mobile-unique) */
+  .footer-realworld.mobile-unique .col-toggle {
+    display: inline-flex;
+  }
+
+  /* Top area centered & compact */
+  .footer-realworld.mobile-unique .footer-top {
+    width: 100%;
+    border-bottom: none;
+    padding-bottom: 14px;
+    margin-bottom: 6px;
+  }
+
+  .footer-realworld.mobile-unique .footer-brand {
+    gap: 12px;
+  }
+
+  .footer-realworld.mobile-unique .footer-logo {
+    height: 60px;
+    filter: drop-shadow(0 6px 18px rgba(0, 224, 255, 0.08));
+  }
+
+  .footer-realworld.mobile-unique .footer-brand h3 {
+    font-size: 1.15rem;
+    color: #eafcff;
+    letter-spacing: .2px;
+  }
+
+  .footer-realworld.mobile-unique .footer-links {
+    display: none; /* compact: show important links via columns */
+  }
+
+  /* Footer columns become card-like and collapsible */
+  .footer-realworld.mobile-unique .footer-middle {
+    margin-top: 16px;
+    display: block;
+  }
+
+  .footer-realworld.mobile-unique .footer-column {
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    padding: 12px 12px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 20px rgba(2,6,23,0.6);
+    border-left: 4px solid rgba(0, 224, 255, 0.12);
+  }
+
+  .footer-realworld.mobile-unique .footer-column h4 {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding-right: 8px;
+    color: #e8fbff;
+  }
+
+  /* Toggle button inserted by JS */
+  .footer-realworld.mobile-unique .col-toggle {
+    background: transparent;
+    border: none;
+    color: #00e0ff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .footer-realworld.mobile-unique .col-toggle:focus {
+    outline: 2px solid rgba(0, 224, 255, 0.22);
+    outline-offset: 2px;
+  }
+  .footer-realworld.mobile-unique .col-toggle .chev {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  /* Collapsible content wrapper */
+  .footer-realworld.mobile-unique .col-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.36s cubic-bezier(.2,.9,.3,1), padding 0.28s;
+    padding-top: 0;
+  }
+  .footer-realworld.mobile-unique .col-content.open {
+    max-height: 1000px; /* large enough for content */
+    padding-top: 10px;
+  }
+
+  .footer-realworld.mobile-unique .footer-column ul li {
+    margin: 10px 0;
+  }
+
+  .footer-realworld.mobile-unique .footer-column a,
+  .footer-realworld.mobile-unique .footer-column p {
+    color: #d7fbff;
+    font-size: 0.98rem;
+  }
+
+  /* Social area larger for touch */
+  .footer-realworld.mobile-unique .footer-social {
+    margin-top: 8px;
+  }
+  .footer-realworld.mobile-unique .footer-social button {
+    margin: 0 8px;
+    padding: 12px;
+    font-size: 1.4rem;
+    border-width: 2px;
+    transition: transform 0.18s ease, background-color 0.18s;
+  }
+
+  .footer-realworld.mobile-unique .footer-bottom {
+    margin-top: 12px;
+    font-size: 0.86rem;
+  }
+  .footer-realworld.mobile-unique .footer-bottom hr {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 10px;
+  }
+
+  /* Focus states for links inside mobile theme */
+  .footer-realworld.mobile-unique a:focus {
+    outline: 2px solid rgba(0,224,255,0.14);
+    outline-offset: 3px;
+  }
+}
+
 
 
 /* Contact Section */
@@ -1972,6 +2354,7 @@ body, html {
 .lottie-container-alt {
   width: 180px;
   height: 180px;
+  flex-shrink: 0;
 }
 
 .timeline-marker {
@@ -2007,7 +2390,7 @@ body, html {
   box-shadow: 0 6px 25px rgba(0, 255, 200, 0.35);
 }
 
-/* Responsive */
+/* ✅ Responsive Fixes */
 @media (max-width: 992px) {
   .timeline-content {
     flex-direction: column;
@@ -2019,11 +2402,48 @@ body, html {
   }
 }
 
+@media (max-width: 768px) {
+  .timeline-item {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .timeline-content {
+    padding: 20px;
+  }
+  .timeline-text h3 {
+    font-size: 1.5rem;
+  }
+  .timeline-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .lottie-container,
+  .lottie-container-alt {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 @media (max-width: 600px) {
   .intro-content h1 {
     font-size: 2.3rem;
   }
+  .intro-content p {
+    font-size: 1rem;
+  }
+  .timeline-text h3 {
+    font-size: 1.3rem;
+  }
+  .timeline-text p {
+    font-size: 0.95rem;
+  }
+  .lottie-container,
+  .lottie-container-alt {
+    width: 120px;
+    height: 120px;
+  }
 }
+
 
 /* About page */
 /* About Section */
@@ -2977,8 +3397,10 @@ model-viewer:hover {
     font-size: clamp(0.95rem, 1.4vw, 1.1rem);
   }
 
+  /* ✅ Fix: ensure model is always visible on mobile */
   model-viewer {
-    height: clamp(250px, 45vh, 400px);
+    min-height: 280px;
+    height: clamp(280px, 50vh, 400px);
   }
 }
 
@@ -2994,6 +3416,7 @@ model-viewer:hover {
     height: clamp(500px, 55vh, 700px);
   }
 }
+
 
 
 /* 🌑 Minimal Modern Dark Service Page */
@@ -3164,6 +3587,3 @@ model-viewer:hover {
     padding: 100px 20px;
   }
 }
-
-
-
