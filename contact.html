@@ -404,13 +404,13 @@ document.addEventListener("DOMContentLoaded", function() {
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
   <script>
     (function() {
-      emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+      emailjs.init("ukK6jg9xq1t4JJt-C"); // Replace with your EmailJS Public Key
     })();
 
     document.getElementById("contact-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
+      emailjs.sendForm("service_lfmkv31", "template_srobukt", this)
         .then(function() {
           alert("Message sent successfully!");
         }, function(error) {
