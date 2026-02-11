@@ -89,8 +89,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    <!-- AOS init can stay in bottom, but keep CSS link above -->
-
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
@@ -101,6 +99,171 @@
 
   <!-- AOS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <style>
+      /* Contact Section Styling */
+/* ===== Contact Section ===== */
+.contact-section {
+  display: flex;
+  justify-content: center;
+  padding: clamp(30px, 5vw, 50px) 20px;
+}
+
+.contact-card {
+  max-width: 1100px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
+  color: #fff;
+  margin-top: clamp(40px, 10vw, 90px);
+}
+
+.contact-card h2 {
+  color: #00e5ff;
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.contact-intro {
+  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+/* ===== Contact Grid ===== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Form Styles ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+  color: #00e5ff;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+}
+
+input,
+textarea {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  outline: none;
+  font-size: 1rem;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #bbb;
+}
+
+textarea {
+  resize: none;
+  min-height: 120px;
+}
+
+/* ===== Send Button ===== */
+.send-btn {
+  background: linear-gradient(90deg, #00e5ff, #00bcd4);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.send-btn:hover {
+  background: linear-gradient(90deg, #00bcd4, #00e5ff);
+  box-shadow: 0 0 15px #00e5ff88;
+}
+
+/* ===== Quick Contact Box ===== */
+.quick-contact {
+  background: rgba(15, 15, 31, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+.quick-contact h3 {
+  color: #00e5ff;
+  margin-bottom: 1rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+.quick-contact p {
+  margin-bottom: 0.8rem;
+  color: #ddd;
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+}
+
+.quick-contact i {
+  color: #00e5ff;
+  margin-right: 0.5rem;
+  transition: 0.3s;
+}
+
+.quick-contact p:hover i {
+  transform: scale(1.2);
+}
+
+/* ===== Social Links ===== */
+.social-links {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.social-links a {
+  background: rgba(0, 229, 255, 0.1);
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: #00e5ff;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  background: #00e5ff;
+  color: #000;
+  box-shadow: 0 0 15px #00e5ff88;
+}
+
+/* ===== Large Screen Tweaks ===== */
+@media (min-width: 1600px) {
+  .contact-card {
+    max-width: 1400px;
+    padding: 3rem;
+  }
+  .contact-grid {
+    gap: 3rem;
+  }
+}
+
+  </style>
 </head>
 
 <body class="dark-mode">
@@ -187,176 +350,53 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<!-- Page Title -->
-<header class="svc-hero-header">
-  <h1>Our Services</h1>
-  <p class="svc-hero-subtext">
-    We deliver scalable IT solutions, modern infrastructure, and emerging technologies
-    that help businesses innovate, grow, and stay secure in a fast-changing digital world.
-  </p>
-</header>
-
-<!-- Main Services -->
-<section class="core-services-section">
-  <div class="core-services-wrapper">
-
-    <div class="core-service-item core-service-db" data-aos="fade-up">
-      <div class="core-service-icon"><i class="ri-database-2-fill"></i></div>
-      <div class="core-service-content">
-        <h3 class="core-service-title">Database Design & Management</h3>
-        <p class="core-service-text">
-          We design, optimize, and maintain databases like MySQL, PostgreSQL, and MongoDB 
-          ensuring scalability, high performance, and enterprise-level security for 24/7 operations.
-        </p>
-        <ul class="core-service-list">
-          <li>High-performance schema architecture</li>
-          <li>Backup & disaster recovery planning</li>
-          <li>Database performance tuning</li>
-          <li>Data security & access control</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="core-service-item core-service-support" data-aos="fade-up" data-aos-delay="100">
-      <div class="core-service-icon"><i class="ri-customer-service-2-fill"></i></div>
-      <div class="core-service-content">
-        <h3 class="core-service-title">IT Support & Managed Services</h3>
-        <p class="core-service-text">
-          Proactive IT support with rapid troubleshooting, preventive maintenance,
-          infrastructure monitoring, and SLA-driven services to keep your business running seamlessly.
-        </p>
-        <ul class="core-service-list">
-          <li>24/7 system monitoring</li>
-          <li>Remote & on-site support</li>
-          <li>Security patch management</li>
-          <li>Hardware & software maintenance</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="core-service-item core-service-network" data-aos="fade-up" data-aos-delay="200">
-      <div class="core-service-icon"><i class="ri-wifi-fill"></i></div>
-      <div class="core-service-content">
-        <h3 class="core-service-title">Network Setup & Management</h3>
-        <p class="core-service-text">
-          Secure, high-speed networks with advanced firewalls, VPN integration,
-          and scalable architecture designed for business growth and protection.
-        </p>
-        <ul class="core-service-list">
-          <li>Firewall & intrusion prevention</li>
-          <li>Secure VPN configuration</li>
-          <li>LAN/WAN optimization</li>
-          <li>Network performance monitoring</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="core-service-item core-service-dev" data-aos="fade-up" data-aos-delay="300">
-      <div class="core-service-icon"><i class="ri-code-s-slash-line"></i></div>
-      <div class="core-service-content">
-        <h3 class="core-service-title">Web & Software Development</h3>
-        <p class="core-service-text">
-          Custom websites, scalable applications, and enterprise software solutions
-          built with user-focused design and the latest technologies.
-        </p>
-        <ul class="core-service-list">
-          <li>Responsive website development</li>
-          <li>Custom business applications</li>
-          <li>API integrations</li>
-          <li>Secure coding practices</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="core-service-item core-service-ecom" data-aos="fade-up" data-aos-delay="400">
-      <div class="core-service-icon"><i class="ri-shopping-cart-2-fill"></i></div>
-      <div class="core-service-content">
-        <h3 class="core-service-title">E-commerce Development</h3>
-        <p class="core-service-text">
-          Conversion-driven online stores with secure payment integration,
-          inventory automation, and optimized user experience for maximum sales.
-        </p>
-        <ul class="core-service-list">
-          <li>Payment gateway integration</li>
-          <li>Inventory & order management</li>
-          <li>SEO-friendly architecture</li>
-          <li>Mobile-first design</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="core-services-cta">
-    <p>Need a customized IT solution for your business?</p>
-    <a href="#contact" class="core-services-btn">Request Consultation</a>
+<!-- ===== PDF Image Section (Before Footer) ===== -->
+<section class="pdf-image-section text-center my-5">
+  <h2 class="text-light mb-3">Company Profile</h2>
+  <div class="pdf-image-container">
+    <img 
+      src="images/Red and White Video Centric Coming Soon Instagram Post_page-0001.jpg" 
+      alt="Company Profile PDF Preview" 
+      class="pdf-image"
+      loading="lazy"
+    />
   </div>
 </section>
 
-<!-- Advanced Services -->
-<section class="svc-advanced-section">
-  <div class="svc-advanced-header">
-    <h2>Advanced & Emerging Tech Services</h2>
-    <p>
-      We help businesses leverage next-generation technologies to drive innovation,
-      improve efficiency, and create competitive advantages in the digital era.
-    </p>
-  </div>
+<style>
+  .pdf-image-section {
+    background-color: #0f0f1f;
+    padding: 60px 20px;
+  }
 
-  <div class="svc-grid-wrapper">
+  .pdf-image-section h2 {
+    color: #00e5ff;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
 
-    <div class="svc-card svc-card-ai" data-aos="zoom-in">
-      <div class="svc-card-icon"><i class="ri-robot-2-fill"></i></div>
-      <h3 class="svc-card-title">AI & Machine Learning</h3>
-      <p class="svc-card-description">
-        Custom AI solutions including chatbots, automation tools, and predictive analytics 
-        designed to enhance decision-making, improve operational efficiency, and reduce manual workload.
-      </p>
-      <ul class="svc-card-features">
-        <li>AI-powered chatbots</li>
-        <li>Predictive analytics models</li>
-        <li>Business process automation</li>
-        <li>Data-driven insights</li>
-      </ul>
-    </div>
+  .pdf-image-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
 
-    <div class="svc-card svc-card-blockchain" data-aos="zoom-in" data-aos-delay="100">
-      <div class="svc-card-icon"><i class="ri-links-fill"></i></div>
-      <h3 class="svc-card-title">Blockchain Solutions</h3>
-      <p class="svc-card-description">
-        Secure and decentralized applications that empower businesses with greater control,
-        enhanced transparency, and reliable smart contract execution.
-      </p>
-      <ul class="svc-card-features">
-        <li>Smart contract development</li>
-        <li>Decentralized applications (DApps)</li>
-        <li>Tokenization solutions</li>
-        <li>Secure transaction architecture</li>
-      </ul>
-    </div>
+  .pdf-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-    <div class="svc-card svc-card-cloud" data-aos="zoom-in" data-aos-delay="200">
-      <div class="svc-card-icon"><i class="ri-cloud-fill"></i></div>
-      <h3 class="svc-card-title">Cloud Migration & DevOps</h3>
-      <p class="svc-card-description">
-        Seamless migration to leading cloud platforms with minimal downtime,
-        integrated CI/CD pipelines, scalable infrastructure, and cost optimization strategies.
-      </p>
-      <ul class="svc-card-features">
-        <li>AWS / Azure / GCP migration</li>
-        <li>CI/CD pipeline automation</li>
-        <li>Infrastructure as Code (IaC)</li>
-        <li>Cloud cost optimization</li>
-      </ul>
-    </div>
+  .pdf-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 35px rgba(0, 229, 255, 0.25);
+  }
+</style>
 
-  </div>
 
-  <div class="svc-cta-wrapper">
-    <p>Ready to adopt advanced technologies?</p>
-    <a href="#contact" class="svc-cta-button">Talk to Our Experts</a>
-  </div>
-</section>
+
+
 
 <!-- Back to Top -->
 <button id="btn-back-to-top"><i class="bi bi-arrow-up"></i></button>

@@ -106,7 +106,6 @@
   display: flex;
   justify-content: center;
   padding: clamp(30px, 5vw, 50px) 20px;
-  background: linear-gradient(135deg, #0d1b2a, #1b263b);
 }
 
 .contact-card {
@@ -297,12 +296,12 @@ textarea {
       </li>
       <!-- ✅ Mobile-only CTA inside menu (duplicate) -->
       <li class="nav-item mobile-cta">
-        <a href="contact.html" class="cta-button">Let's Connect</a>
+        <a href="contact.html" class="cta-button">Contact - Us</a>
       </li>
     </ul>
 
     <!-- CTA Button -->
-    <a href="contact.html" class="cta-button">Let's Connect</a>
+    <a href="contact.html" class="cta-button">Contact - Us</a>
   </div>
 </nav>
 
@@ -350,6 +349,128 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>
+
+<!-- ================= Contact - Us SECTION ================= -->
+<!-- <section class="build-pc-section">
+  <div class="build-pc-container">
+    <h2 class="build-pc-title">💻 Build Your Own PC</h2>
+    <p class="build-pc-subtitle">
+      Customize your dream setup — choose every component and get a quote instantly.
+    </p> -->
+
+    <!-- ✅ Flow Diagram -->
+    <!-- <div class="flow-diagram">
+      <div class="node start">Choose Components</div>
+      <div class="connector red"></div>
+      <div class="node">Submit Details</div>
+      <div class="connector blue"></div>
+      <div class="node">Expert Review</div>
+      <div class="connector green"></div>
+      <div class="node">Get Quote</div>
+      <div class="connector yellow"></div>
+      <div class="node end">Assemble & Deliver</div>
+    </div> -->
+
+    <!-- ✅ Contact Form -->
+    <!-- <form class="build-pc-form" id="buildPcForm"> -->
+      <!-- PC COMPONENT FIELDS -->
+      <!-- <div class="form-row">
+        <div class="form-group">
+          <label for="processor">Processor</label>
+          <input type="text" id="processor" name="processor" placeholder="e.g. Intel i7 / Ryzen 7" required />
+        </div>
+        <div class="form-group">
+          <label for="gpu">Graphics Card (GPU)</label>
+          <input type="text" id="gpu" name="gpu" placeholder="e.g. RTX 4070 / RX 7800 XT" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ram">Memory (RAM)</label>
+          <input type="text" id="ram" name="ram" placeholder="e.g. 16GB DDR5 6000MHz" required />
+        </div>
+        <div class="form-group">
+          <label for="storage">Storage</label>
+          <input type="text" id="storage" name="storage" placeholder="e.g. 1TB NVMe SSD" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="psu">Power Supply (PSU)</label>
+          <input type="text" id="psu" name="psu" placeholder="e.g. 750W 80+ Gold" required />
+        </div>
+        <div class="form-group">
+          <label for="case">PC Case</label>
+          <input type="text" id="case" name="case" placeholder="e.g. NZXT H510 / Lian Li 011" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cooling">Cooling Preference</label>
+          <select id="cooling" name="cooling" required>
+            <option value="">Select Cooling Type</option>
+            <option>Air Cooling</option>
+            <option>Liquid Cooling</option>
+            <option>Custom Loop</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="budget">Budget Range</label>
+          <input type="text" id="budget" name="budget" placeholder="e.g. ₹80,000 - ₹1,20,000" required />
+        </div>
+      </div> -->
+
+      <!-- USER CONTACT DETAILS -->
+      <!-- <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="message">Additional Requirements</label>
+        <textarea id="message" name="message" rows="4" placeholder="Tell us your needs..."></textarea>
+      </div> -->
+
+      <!-- SUBMIT BUTTON -->
+      <!-- <div class="form-submit">
+        <button type="submit" class="build-pc-btn">🚀 Submit Configuration</button>
+      </div>
+    </form>
+  </div>
+</section> -->
+
+<!-- ================= EMAILJS SCRIPT ================= -->
+<!-- <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("ukK6jg9xq1t4JJt-C");
+  })();
+
+  document.getElementById('buildPcForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const form = this;
+
+    emailjs.sendForm('service_lfmkv31', 'template_siiwbud', form)
+      .then(function() {
+        alert('✅ Your PC configuration has been submitted successfully!');
+        form.reset();
+      }, function(error) {
+        alert('❌ Failed to submit. Please try again later.');
+        console.error('EmailJS Error:', error);
+      });
+  }); -->
+</script>
+
 
 <!-- Contact Section -->
 <section class="contact-section">
@@ -404,13 +525,13 @@ document.addEventListener("DOMContentLoaded", function() {
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
   <script>
     (function() {
-      emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+      emailjs.init("ukK6jg9xq1t4JJt-C"); // Replace with your EmailJS Public Key
     })();
 
     document.getElementById("contact-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
+      emailjs.sendForm("service_lfmkv31", "template_srobukt", this)
         .then(function() {
           alert("Message sent successfully!");
         }, function(error) {

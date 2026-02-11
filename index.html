@@ -123,12 +123,12 @@
       </li>
       <!-- ✅ Mobile-only CTA inside menu (duplicate) -->
       <li class="nav-item mobile-cta">
-        <a href="contact.html" class="cta-button">Let's Connect</a>
+        <a href="contact.html" class="cta-button">Contact - Us</a>
       </li>
     </ul>
 
     <!-- CTA Button -->
-    <a href="contact.html" class="cta-button">Let's Connect</a>
+    <a href="contact.html" class="cta-button">Contact - Us</a>
   </div>
 </nav>
 
@@ -177,72 +177,320 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-  <section class="hero-section">
-    <!-- Canvas for WebGL background (Three.js star field) -->
-    <canvas id="hero-canvas" aria-hidden="true" class="hero-canvas" style="position:absolute; inset:0; width:100%; height:100%; z-index:0;"></canvas>
+<section class="hero-section">
+  <!-- Decorative animated canvas (no semantic content) -->
+  <canvas id="heroBgCanvas" aria-hidden="true"></canvas>
 
-    <div class="hero-content" style="position:relative; z-index:2;">
-      <h1 class="tech-header">BOOMER</h1>
-      <h1 class="animate-text">TECHNOLOGICAL REVOLUTION</h1>
-      <h2 class="animate-text">Transforming Ideas Into Reality</h2>
-      <p class="animate-text">
-        Unlock new possibilities with our innovative IT solutions, cloud technologies, and cutting-edge services.
-      </p>
-      <a href="contact.html" class="cta-button animate-text">Start Your Journey</a>
+  <!-- Floating text content (NO BOX STYLE) -->
+  <div class="hero-content">
+    <h1 class="brand">BOOMER</h1>
+    <h2 class="headline">EMPOWERING TOMORROW’S INTELLIGENCE</h2>
+    <p class="lead">
+      We design smart systems, secure cloud platforms, automation, and cyber security 
+      that turn bold ideas into scalable digital products. Clean engineering, 
+      human-focused design.
+    </p>
+    <div class="cta-wrap">
+      <a href="services.html" class="btn btn-primary">Explore Solutions</a>
+      <a href="contact.html" class="btn btn-outline">Let’s Collaborate</a>
     </div>
+  </div>
+</section>
 
-    <div class="hero-animation animate-image" id="lottie-bg" style="position:relative; z-index:1;"></div>
-  </section>
+<!-- =========================
+  Script: Canvas background + interactions
+  ========================= -->
+<script>
+  (function () {
+    const canvas = document.getElementById('heroBgCanvas');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let DPR = Math.max(window.devicePixelRatio || 1, 1);
+    let W = 0, H = 0;
+    let time = 0;
+    const mouse = { x: 0.5, y: 0.5 };
 
-  <!-- JS: Lottie + GSAP animations (wrapped safely) -->
-  <script>
-  // Ensure lottie is available before attempting to load animation
-  if (window.lottie) {
-    try {
-      lottie.loadAnimation({
-        container: document.getElementById('lottie-bg'),
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: './images/Hke4fIFj5m.json'
-      });
-    } catch (e) {
-      console.warn('Lottie hero animation failed to load', e);
+    // ----- responsiveness -----
+    function resize() {
+      DPR = Math.max(window.devicePixelRatio || 1, 1);
+      W = Math.max(800, window.innerWidth);
+      H = Math.max(600, window.innerHeight);
+      canvas.width = Math.floor(W * DPR);
+      canvas.height = Math.floor(H * DPR);
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      buildGrid();
     }
-  }
+    window.addEventListener('resize', resize, { passive: true });
 
-  // Ensure GSAP is present before calling; wait for window load just in case
-  window.addEventListener('load', () => {
-    if (window.gsap) {
-      gsap.fromTo(
-        '.animate-text',
-        { y: -100, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'power3.out'
-        }
-      );
+    // ----- mouse parallax -----
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX / window.innerWidth;
+      mouse.y = e.clientY / window.innerHeight;
+    });
 
-      if (document.getElementById('lottie-bg')) {
-        gsap.fromTo(
-          '#lottie-bg',
-          { y: -200, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            delay: 0.6,
-            ease: 'bounce.out'
-          }
-        );
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        mouse.x = e.touches[0].clientX / window.innerWidth;
+        mouse.y = e.touches[0].clientY / window.innerHeight;
+      }
+    }, { passive: true });
+
+    // ----- aurora blobs -----
+    const blobs = [];
+    const BLOB_COUNT = 5;
+    function buildBlobs() {
+      blobs.length = 0;
+      for (let i = 0; i < BLOB_COUNT; i++) {
+        blobs.push({
+          hue: Math.floor(Math.random() * 360),
+          radius: (0.18 + Math.random() * 0.28) * Math.max(W, H),
+          ox: Math.random(),
+          oy: Math.random(),
+          speed: 0.0005 + Math.random() * 0.0011,
+          phase: Math.random() * Math.PI * 2,
+          xAmp: 0.12 + Math.random() * 0.18,
+          yAmp: 0.06 + Math.random() * 0.18,
+        });
       }
     }
-  });
+
+    // ----- metaballs -----
+    const metaballs = [];
+    const META_COUNT = 28;
+    function buildMetaballs() {
+      metaballs.length = 0;
+      for (let i = 0; i < META_COUNT; i++) {
+        metaballs.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          r: 6 + Math.random() * 40,
+          hue: (200 + Math.random() * 160) % 360,
+        });
+      }
+    }
+
+    // ----- particles -----
+    const particles = [];
+    const PCOUNT = 80;
+    function buildParticles() {
+      particles.length = 0;
+      for (let i = 0; i < PCOUNT; i++) {
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: 1 + Math.random() * 2,
+        });
+      }
+    }
+
+    // ----- wavy grid -----
+    let grid = { cols: 24, rows: 10, points: [] };
+    function buildGrid() {
+      grid.points = [];
+      const cols = Math.max(12, Math.floor((W / 80)));
+      const rows = Math.max(6, Math.floor((H / 120)));
+      grid.cols = cols;
+      grid.rows = rows;
+      for (let j = 0; j <= rows; j++) {
+        for (let i = 0; i <= cols; i++) {
+          const pctX = i / cols;
+          const pctY = j / rows;
+          const x = pctX * W;
+          const y = pctY * H;
+          grid.points.push({
+            x,
+            y,
+            ox: x,
+            oy: y,
+            seed: Math.random() * 1000,
+          });
+        }
+      }
+    }
+
+    // ----- initialization -----
+    function init() {
+      resize();
+      buildBlobs();
+      buildMetaballs();
+      buildParticles();
+      buildGrid();
+      requestAnimationFrame(loop);
+    }
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    // ----- draw functions -----
+    function drawAurora(dt) {
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < blobs.length; i++) {
+        const b = blobs[i];
+        b.phase += b.speed * dt;
+        const cx = (0.5 + Math.sin(b.phase) * b.xAmp + (mouse.x - 0.5) * 0.2) * W;
+        const cy = (0.4 + Math.cos(b.phase * 0.7) * b.yAmp + (mouse.y - 0.5) * 0.15) * H;
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, b.radius);
+        grad.addColorStop(0, `hsla(${b.hue}, 95%, 65%, 0.18)`);
+        grad.addColorStop(0.35, `hsla(${(b.hue + 50) % 360}, 90%, 55%, 0.12)`);
+        grad.addColorStop(1, `hsla(${(b.hue + 120) % 360}, 85%, 35%, 0.0)`);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, b.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function drawMetaballs(dt) {
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < metaballs.length; i++) {
+        const m = metaballs[i];
+        m.x += m.vx * dt * 0.06;
+        m.y += m.vy * dt * 0.06;
+        if (m.x < -m.r) m.x = W + m.r;
+        if (m.x > W + m.r) m.x = -m.r;
+        if (m.y < -m.r) m.y = H + m.r;
+        if (m.y > H + m.r) m.y = -m.r;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${m.hue}, 85%, 60%, 0.08)`;
+        ctx.shadowBlur = Math.max(10, m.r * 0.9);
+        ctx.shadowColor = `hsla(${m.hue}, 95%, 60%, 0.8)`;
+        ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function drawParticles(dt) {
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const cx = W * (0.5 + (mouse.x - 0.5) * 0.1);
+        const cy = H * (0.45 + (mouse.y - 0.5) * 0.1);
+        p.vx += (cx - p.x) * 0.000002 * dt;
+        p.vy += (cy - p.y) * 0.000002 * dt;
+        p.x += p.vx * dt * 0.07;
+        p.y += p.vy * dt * 0.07;
+        if (p.x < 0) p.x = W;
+        if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        if (p.y > H) p.y = 0;
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(160,240,255,0.9)';
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.lineWidth = 0.6;
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+          const pa = particles[a];
+          const pb = particles[b];
+          const dx = pa.x - pb.x;
+          const dy = pa.y - pb.y;
+          const dist2 = dx * dx + dy * dy;
+          if (dist2 < 15000) {
+            const alpha = 0.6 - dist2 / 15000;
+            ctx.strokeStyle = `rgba(140,230,255,${alpha * 0.7})`;
+            ctx.beginPath();
+            ctx.moveTo(pa.x, pa.y);
+            ctx.lineTo(pb.x, pb.y);
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function drawWireGrid(dt) {
+      ctx.save();
+      ctx.globalAlpha = 0.28;
+      ctx.strokeStyle = 'rgba(120,200,255,0.12)';
+      ctx.lineWidth = 1;
+      const cols = grid.cols;
+      const rows = grid.rows;
+      for (let r = 0; r <= rows; r++) {
+        ctx.beginPath();
+        for (let c = 0; c <= cols; c++) {
+          const idx = r * (cols + 1) + c;
+          const p = grid.points[idx];
+          const wave = Math.sin((time * 0.0008) + p.seed * 0.04 + c * 0.25 + r * 0.15);
+          const offsetY = wave * (12 + Math.sin(p.seed) * 8) * (1 - Math.abs((r / rows) - 0.5));
+          const px = lerp(p.ox, p.ox + (mouse.x - 0.5) * W * 0.08, 0.3);
+          const py = p.oy + offsetY;
+          if (c === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+      for (let c = 0; c <= cols; c++) {
+        ctx.beginPath();
+        for (let r = 0; r <= rows; r++) {
+          const idx = r * (cols + 1) + c;
+          const p = grid.points[idx];
+          const wave = Math.cos((time * 0.0009) + p.seed * 0.05 + c * 0.18 + r * 0.2);
+          const offsetX = wave * (10 + Math.sin(p.seed * 1.5) * 6) * (1 - Math.abs((c / cols) - 0.5));
+          const px = p.ox + offsetX;
+          const py = lerp(p.oy, p.oy + (mouse.y - 0.5) * H * 0.06, 0.3);
+          if (r === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // ----- main loop -----
+    let last = performance.now();
+    function loop(now) {
+      const dt = Math.min(40, now - last);
+      last = now;
+      time = now;
+
+      // 🔹 transparent background (removed dark color fill)
+      ctx.clearRect(0, 0, W, H);
+
+      drawWireGrid(dt);
+      drawAurora(dt);
+      drawMetaballs(dt);
+      drawParticles(dt);
+
+      requestAnimationFrame(loop);
+    }
+
+    function rebuildAll() {
+      buildBlobs();
+      buildMetaballs();
+      buildParticles();
+      buildGrid();
+    }
+
+    window.addEventListener('resize', () => {
+      resize();
+      rebuildAll();
+    });
+
+    init();
+  })();
 </script>
 
+
+<!-- 🔹 NEW PARALLAX BACKGROUND SECTION -->
+<section class="parallax-section">
+  <div class="overlay"></div>
+  <div class="parallax-content" data-aos="fade-up">
+    <h2>Where Technology Meets Imagination</h2>
+    <p>Turning visionary ideas into next-gen digital experiences.</p>
+  </div>
+</section>
 
   
 <section class="reactor-layout" aria-label="Our services">
@@ -298,10 +546,7 @@ document.addEventListener("DOMContentLoaded", function() {
   </div>
 </section>
 
-
-<!-- GSAP + ScrollTrigger (already included in head) -->
-
-<!-- Lottie for reactor-left (safe init) -->
+<!-- ✅ FIXED JS (no change needed, reviewed and retained as-is) -->
 <script>
   (function() {
     const lottieContainer = document.getElementById('lottie-animation');
@@ -315,10 +560,9 @@ document.addEventListener("DOMContentLoaded", function() {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: 'images/Animation.json' // ensure this path is correct
+        path: 'images/Animation.json'
       });
 
-      // If animation errors or doesn't load in X ms, show fallback
       let loaded = false;
       anim.addEventListener && anim.addEventListener('DOMLoaded', () => { loaded = true; });
       setTimeout(() => {
@@ -328,13 +572,11 @@ document.addEventListener("DOMContentLoaded", function() {
       }, 2500);
 
     } catch (e) {
-      // show fallback image if Lottie fails
       if (fallbackImg) { fallbackImg.style.display = 'block'; lottieContainer.style.display = 'none'; }
       console.warn('Lottie failed to load', e);
     }
   })();
 
-  // Scroll Animations (GSAP should be available since we loaded it in head)
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -379,7 +621,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Click / keyboard activation -> redirect to services page with fragment
   document.querySelectorAll('.service-node').forEach(node => {
     node.addEventListener('click', () => {
       const slug = node.dataset.slug || '';
@@ -395,9 +636,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   function redirectToServices(slug) {
-    // optional: map slug to a full URL if you use separate pages
     if (slug) {
-      // example: services.html#web-software
       window.location.href = 'services.html#' + encodeURIComponent(slug);
     } else {
       window.location.href = 'services.html';
@@ -405,28 +644,28 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 </script>
 
-<section class="pc-builder-section">
-  <!-- Left: Build Your PC Text -->
-  <div class="pc-builder-text" data-aos="fade-up-left">
-    <h2>Build Your PC</h2>
-    <p>Choose your components and visualize your custom gaming PC in real-time with our interactive 3D preview. Select from a variety of hardware, tweak your build, and see the changes instantly.</p>
-    <a href="pc-builder.html" class="pc-builder-btn">Build Your PC</a>
-  </div>
 
-  <!-- Right: 3D Model Viewer -->
-  <div class="pc-builder-3d" data-aos="fade-up-right">
-    <model-viewer
-      src="images/dream_computer_setup-v1.glb"
-      alt="3D Service Model"
-      camera-controls
-      auto-rotate
-      shadow-intensity="1"
-      ar
-      loading="eager"
-      interaction-prompt="auto"
-    ></model-viewer>
-  </div>
+<section class="pc-builder-section" id="pc-builder">
+  <div class="pc-builder-overlay"></div>
 </section>
+
+<script>
+  // Scroll-triggered animation for text box
+  window.addEventListener("scroll", () => {
+    const section = document.querySelector(".pc-builder-section");
+    const content = document.querySelector(".pc-builder-content");
+    const sectionTop = section.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+
+    // When section fully in view, show the text box
+    if (sectionTop < windowHeight * 0.6) {
+      content.classList.add("visible");
+    } else {
+      content.classList.remove("visible");
+    }
+  });
+</script>
+
 
 
 <!-- Achievements Section -->
@@ -504,22 +743,25 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 <!-- Expertise Showcase Section Ends -->
 
+<section class="pc-builder-section" id="pc-builder">
+  <div class="pc-builder-overlay"></div>\
+</section>
 
-
-<!-- ✅ Company Timeline Section -->
+<!-- ✅ Company Timeline Section (Modern Cyber Dark Theme) -->
 <section class="about-section">
+  <div class="overlay"></div>
   <div class="about-container">
-    <div class="intro-content">
+    <div class="intro-content fade-in">
       <h1>Shaping <span>Tomorrow’s Technology</span> Today</h1>
       <p>
-        At BOOMER Technologies, we design, innovate, and secure the digital future. 
+        At <strong>BOOMER Technologies</strong>, we design, innovate, and secure the digital future. 
         Our mission is to create cutting-edge solutions that empower industries, drive growth, and inspire change.
       </p>
     </div>
 
     <div class="timeline-wrapper">
       <!-- ✅ Timeline Item 1 -->
-      <div class="timeline-item info-card animate-from-left" data-delay="0.2s">
+      <div class="timeline-item slide-left">
         <div class="timeline-content">
           <div class="timeline-text">
             <h3>Our Mission</h3>
@@ -527,50 +769,43 @@ document.addEventListener("DOMContentLoaded", function() {
               Our mission is to empower organizations through innovative, scalable, and secure IT solutions.
               We aim to drive operational efficiency, enhance user experiences, and support long-term, sustainable growth.
               By leveraging cutting-edge technologies, we help businesses adapt and thrive in a digital world.
-              We are committed to delivering solutions that align with strategic goals and evolving market needs.
             </p>
           </div>
           <div class="lottie-container" id="mission-animation"></div>
         </div>
-        <div class="timeline-marker"></div>
       </div>
 
       <!-- ✅ Timeline Item 2 -->
-      <div class="timeline-item info-card animate-from-right" data-delay="0.4s">
+      <div class="timeline-item slide-right">
         <div class="timeline-content reverse">
           <div class="timeline-text">
             <h3>What We Do</h3>
             <p>
               We provide customized IT solutions tailored to your unique business needs.
               Our services include cloud computing, cybersecurity, managed IT services, application development, and strategic IT consulting.
-              We focus on delivering reliable, scalable, and secure technologies. Each solution is designed to enhance efficiency and support your growth.
-              Partner with us to transform your IT infrastructure and achieve your goals.
+              We focus on delivering reliable, scalable, and secure technologies to help you grow and innovate.
             </p>
           </div>
           <div class="lottie-container-alt" id="work-animation"></div>
         </div>
-        <div class="timeline-marker"></div>
       </div>
 
       <!-- ✅ Timeline Item 3 -->
-      <div class="timeline-item info-card animate-from-bottom" data-delay="0.6s">
+      <div class="timeline-item slide-up">
         <div class="timeline-content">
           <div class="timeline-text">
             <h3>Why Choose Us</h3>
             <p>
               We bring expertise in modern technologies, offering 24/7 support, agile implementation, and data-driven strategies.
-              Our approach ensures fast, flexible, and effective IT solutions. We prioritize security, performance, and scalability in every project.
-              By leveraging insights and innovation, we help you stay ahead in a competitive landscape.
-              Partner with us for a smarter, more secure digital future.
+              Our approach ensures fast, flexible, and effective IT solutions with focus on security, performance, and scalability.
             </p>
           </div>
           <div class="lottie-container" id="choose-animation"></div>
         </div>
-        <div class="timeline-marker"></div>
       </div>
     </div>
 
-    <div class="about-cta">
+    <div class="about-cta fade-in">
       <p>Want to explore how we can transform your IT infrastructure?</p>
       <a href="about.html" class="btn-learn-more">Learn More About Us</a>
     </div>
